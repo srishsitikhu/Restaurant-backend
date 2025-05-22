@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,19 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Restaurant {
-  id          Int     @id @default(autoincrement())
-  name        String
-  rating      Float
-  type        String
-  category    String
-  country     String   
-  description String
-  address     String
-  hours       String
-  imageUrl    String
-  viewCount   Int    @default(0)
+model User {
+  id           Int          @id @default(autoincrement())
+  name         String
+  email        String       @unique
+  avatarUrl    String?
+  passwordHash String
+  phoneNumber  String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  role         String       @default("customer")
+  restaurants  Restaurant[]
 }
 
+model Restaurant {
+  id          Int        @id @default(autoincrement())
+  name        String
+  rating      Float      @default(0.0)
+  type        String // e.g., "Fast Food", "Fine Dining"
+  category    String // e.g., "Italian", "Chinese"
+  country     String
+  description String
+  address     String
+  hours       String // e.g., "Mon-Fri 9am-10pm"
+  imageUrl    String
+  viewCount   Int        @default(0)
+  userId      Int
+  user        User       @relation(fields: [userId], references: [id])
+  menuItems   MenuItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
 
-
+model MenuItem {
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String
+  price        Float
+  imageUrl     String?
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
