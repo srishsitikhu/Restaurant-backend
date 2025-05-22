@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use("/api/resturants", resturantRoute)
+app.use("/api/restaurants", resturantRoute)
 // Static folder to serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));;
 

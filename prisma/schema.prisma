@@ -24,12 +24,10 @@ model Restaurant {
   id          Int        @id @default(autoincrement())
   name        String
   rating      Float      @default(0.0)
-  type        String // e.g., "Fast Food", "Fine Dining"
-  category    String // e.g., "Italian", "Chinese"
-  country     String
+  cuisineType    String // e.g., "Italian", "Chinese"
   description String
   address     String
-  hours       String // e.g., "Mon-Fri 9am-10pm"
+  hours       String[] // e.g., "Mon-Fri 9am-10pm"
   imageUrl    String
   viewCount   Int        @default(0)
   userId      Int

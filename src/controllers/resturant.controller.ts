@@ -7,28 +7,35 @@ export const addRestaurant = async (req: Request, res: Response) => {
     const {
       name,
       rating,
-      type,
-      category,
-      country,
+      cuisineType,
       description,
       address,
       hours,
       imageUrl,
-      userId
+      userId,
+      menuItem,
     } = req.body;
 
     const newRestaurant = await prisma.restaurant.create({
       data: {
         name,
         rating,
-        type,
-        category,
-        country,
+        cuisineType,
         description,
         address,
         hours,
         imageUrl,
-        userId
+        userId,
+        menuItems: menuItem
+          ? {
+            create: menuItem.map((item: any) => ({
+              name: item.name,
+              price: item.price,
+              category: item.category,
+              description: item.description,
+            })),
+          }
+          : undefined,
       },
     });
 
@@ -57,7 +64,7 @@ export const deleteRestaurant = async (req: Request, res: Response) => {
       where: { id: parseInt(id) },
     });
 
-    res.status(200).json({ message: "Resturant added succesfully", restaurant: deleteRestaurant });
+    res.status(200).json({ message: "Resturant added succesfully", restaurant: deletedRestaurant });
   } catch (error) {
     console.error("Error deleting restaurant:", error);
     res.status(500).json({ message: "Failed to delete restaurant" });
@@ -71,6 +78,9 @@ export const getResturant = async (req: Request, res: Response) => {
 
     const restaurant = await prisma.restaurant.findFirst({
       where: { id: parseInt(id) },
+      include: {
+        menuItems: true
+      }
     });
 
     res.status(200).json({ message: "Resturant fetch succesfully", restaurant });
