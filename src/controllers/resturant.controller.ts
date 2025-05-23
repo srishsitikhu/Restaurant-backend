@@ -13,7 +13,7 @@ export const addRestaurant = async (req: Request, res: Response) => {
       hours,
       imageUrl,
       userId,
-      menuItem,
+      menuItems,
     } = req.body;
 
     const newRestaurant = await prisma.restaurant.create({
@@ -26,13 +26,13 @@ export const addRestaurant = async (req: Request, res: Response) => {
         hours,
         imageUrl,
         userId,
-        menuItems: menuItem
+        menuItems: menuItems
           ? {
-            create: menuItem.map((item: any) => ({
+            create: menuItems.map((item: any) => ({
               name: item.name,
-              price: item.price,
-              category: item.category,
+              price: Number(item.price),
               description: item.description,
+              imageUrl: imageUrl
             })),
           }
           : undefined,
@@ -43,6 +43,56 @@ export const addRestaurant = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error adding restaurant:", error);
     res.status(500).json({ message: "Failed to add restaurant" });
+  }
+};
+
+export const updateRestaurant = async (req: Request, res: Response) => {
+  try {
+    const {
+      name,
+      rating,
+      cuisineType,
+      description,
+      address,
+      hours,
+      imageUrl,
+      menuItems,
+    } = req.body;
+
+    const { id } = req.params;
+
+    // Update the restaurant data
+    const updatedRestaurant = await prisma.restaurant.update({
+      where: { id: parseInt(id) },
+      data: {
+        name,
+        rating,
+        cuisineType,
+        description,
+        address,
+        hours,
+        imageUrl,
+        menuItems: menuItems
+          ? {
+            deleteMany: {},
+            create: menuItems.map((item: any) => ({
+              name: item.name,
+              price: Number(item.price),
+              description: item.description,
+              imageUrl: imageUrl
+            })),
+          }
+          : undefined,
+      },
+      include: {
+        menuItems: true,
+      },
+    });
+
+    res.status(200).json({ message: "Restaurant updated successfully", updatedRestaurant });
+  } catch (error) {
+    console.error("Error updating restaurant:", error);
+    res.status(500).json({ message: "Failed to update restaurant" });
   }
 };
 
