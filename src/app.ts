@@ -9,6 +9,7 @@ import protectedRoutes from "./routes/protectedRoute"
 import userRoutes from "./routes/user.route"
 import commentRoutes from "./routes/comment.route"
 import menuItemsRoute from "./routes/menuItems.route"
+import contactsRoute from "./routes/contact.route"
 
 const app = express()
 dotenv.config()
@@ -25,6 +26,7 @@ app.use("/auth", authRoutes)                       // for authentication
 app.use("/api/users", userRoutes)               // for users creating and getting
 app.use("/protected", protectedRoutes)          // for protecting the invalid authorization
 app.use("/api/comments",commentRoutes)
+app.use("/api/contacts", contactsRoute)
 
 
 
