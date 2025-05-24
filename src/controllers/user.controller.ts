@@ -28,6 +28,20 @@ export const userRegisteration = async (req: Request, res: Response) => {
         return res.status(500).json({ error: "Registration failed" })
     }
 }
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const deletedUsers = await prisma.user.delete({
+            where: { id: parseInt(id) },
+        });
+
+        res.status(200).json({ message: "User deleted succesfully", restaurant: deletedUsers });
+    } catch (error) {
+        console.error("Error deleting User:", error);
+        res.status(500).json({ message: "Failed to delete Users" });
+    }
+  };
 export const userLogin = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;

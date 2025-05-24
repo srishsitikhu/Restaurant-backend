@@ -7,11 +7,8 @@ import uploadRoutes from "./routes/upload.routes"
 import authRoutes from "./routes/auth"
 import protectedRoutes from "./routes/protectedRoute"
 import userRoutes from "./routes/user.route"
-<<<<<<< HEAD
 import commentRoutes from "./routes/comment.route"
-=======
 import menuItemsRoute from "./routes/menuItems.route"
->>>>>>> 9ad5b67e3833e652c251227a9055fcb747bbd47a
 
 const app = express()
 dotenv.config()

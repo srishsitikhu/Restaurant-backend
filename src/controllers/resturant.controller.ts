@@ -31,7 +31,7 @@ export const addRestaurant = async (req: Request, res: Response) => {
               name: item.name,
               price: Number(item.price),
               description: item.description,
-              imageUrl: imageUrl
+              imageUrl: item.imageUrl
             })),
           }
           : undefined,
@@ -78,7 +78,7 @@ export const updateRestaurant = async (req: Request, res: Response) => {
               name: item.name,
               price: Number(item.price),
               description: item.description,
-              imageUrl: imageUrl
+              imageUrl: item.imageUrl
             })),
           }
           : undefined,
@@ -122,14 +122,13 @@ export const getRestaurants = async (req: Request, res: Response) => {
       condition.location = location;
     }
 
-    const pageNumber = parseInt(page || "1");
-    const size = parseInt(pageSize || "10");
 
     const restaurants = await prisma.restaurant.findMany({
       where: condition,
-      skip: (pageNumber - 1) * size,
-      take: size,
-      orderBy: {createdAt: "desc"}
+      orderBy: {createdAt: "desc"},
+      include:{
+        user:{select:{name:true}}
+      }
     });
 
     res.status(200).json({ message: "Restaurants fetched successfully", restaurants });

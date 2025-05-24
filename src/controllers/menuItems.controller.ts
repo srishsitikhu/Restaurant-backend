@@ -23,3 +23,17 @@ export const getMenuItems = async (req: Request, res: Response) => {
         });
     }
 };
+export const deleteMenuItem = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const deletedMenuItem = await prisma.menuItem.delete({
+            where: { id: parseInt(id) },
+        });
+
+        res.status(200).json({ message: "menuItem deleted succesfully", MenuItem: deletedMenuItem });
+    } catch (error) {
+        console.error("Error deleting menuItem:", error);
+        res.status(500).json({ message: "Failed to delete menuItem" });
+    }
+  };
