@@ -46,7 +46,7 @@ model MenuItem {
   price        Float
   imageUrl     String?
   restaurantId Int
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id],onDelete: Cascade)
 }
 
 model Comment {
@@ -58,3 +58,11 @@ model Comment {
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId Int
 }
+model Contact {
+  id      Int    @id @default(autoincrement())
+  name    String
+  email   String
+  subject String
+  message String
+}
+
