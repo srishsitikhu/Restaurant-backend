@@ -7,13 +7,14 @@ import uploadRoutes from "./routes/upload.routes"
 import authRoutes from "./routes/auth"
 import protectedRoutes from "./routes/protectedRoute"
 import userRoutes from "./routes/user.route"
+import menuItemsRoute from "./routes/menuItems.route"
 
-const app= express()
+const app = express()
 dotenv.config()
 app.use(cors());
 app.use(express.json());
 
-
+app.use("/api/menu-items", menuItemsRoute)
 app.use("/api/restaurants", resturantRoute)
 // Static folder to serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));;
@@ -25,7 +26,7 @@ app.use("/protected", protectedRoutes)          // for protecting the invalid au
 
 
 
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
     res.send("API IS RUNNING >>>")
 })
 
