@@ -7,14 +7,18 @@ import uploadRoutes from "./routes/upload.routes"
 import authRoutes from "./routes/auth"
 import protectedRoutes from "./routes/protectedRoute"
 import userRoutes from "./routes/user.route"
+<<<<<<< HEAD
 import commentRoutes from "./routes/comment.route"
+=======
+import menuItemsRoute from "./routes/menuItems.route"
+>>>>>>> 9ad5b67e3833e652c251227a9055fcb747bbd47a
 
-const app= express()
+const app = express()
 dotenv.config()
 app.use(cors());
 app.use(express.json());
 
-
+app.use("/api/menu-items", menuItemsRoute)
 app.use("/api/restaurants", resturantRoute)
 // Static folder to serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));;
@@ -27,7 +31,7 @@ app.use("/api/comments",commentRoutes)
 
 
 
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
     res.send("API IS RUNNING >>>")
 })
 
