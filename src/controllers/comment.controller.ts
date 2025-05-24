@@ -34,7 +34,7 @@ export const getComments = async (req: Request, res: Response) => {
         const comments = await prisma.comment.findMany({
             where: { restaurantId: parseInt(restaurantId as string, 10) },
         });
-        res.status(200).json({ message: "Succesfully getting comment" });
+        res.status(200).json({ message: "Succesfully getting comment",comments} );
 
     } catch (error) {
         res.status(500).json({ message: "Failed to get comment" });

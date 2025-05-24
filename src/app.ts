@@ -7,6 +7,7 @@ import uploadRoutes from "./routes/upload.routes"
 import authRoutes from "./routes/auth"
 import protectedRoutes from "./routes/protectedRoute"
 import userRoutes from "./routes/user.route"
+import commentRoutes from "./routes/comment.route"
 
 const app= express()
 dotenv.config()
@@ -22,6 +23,7 @@ app.use("/api/upload", uploadRoutes)            // for uploading the file
 app.use("/auth", authRoutes)                       // for authentication
 app.use("/api/users", userRoutes)               // for users creating and getting
 app.use("/protected", protectedRoutes)          // for protecting the invalid authorization
+app.use("/api/comments",commentRoutes)
 
 
 
