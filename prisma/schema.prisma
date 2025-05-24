@@ -18,23 +18,25 @@ model User {
   updatedAt    DateTime     @updatedAt
   role         String       @default("customer")
   restaurants  Restaurant[]
+  Comment      Comment[]
 }
 
 model Restaurant {
   id          Int        @id @default(autoincrement())
   name        String
   rating      Float      @default(0.0)
-  cuisineType    String // e.g., "Italian", "Chinese"
+  cuisineType String // e.g., "Italian", "Chinese"
   description String
-  address     String
+  location    String
   hours       String[] // e.g., "Mon-Fri 9am-10pm"
   imageUrl    String
   viewCount   Int        @default(0)
-  userId      Int
-  user        User       @relation(fields: [userId], references: [id])
+  userId      Int?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
   menuItems   MenuItem[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  Comment     Comment[]
 }
 
 model MenuItem {
@@ -45,4 +47,14 @@ model MenuItem {
   imageUrl     String?
   restaurantId Int
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model Comment {
+  id           Int        @id @default(autoincrement())
+  comment      String
+  userId       Int
+  user         User       @relation(fields: [userId], references: [id],onDelete: Cascade)
+  rating       Float
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId Int
 }

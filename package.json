@@ -4,6 +4,9 @@
     "start": "node dist/server.js",
     "dev": "nodemon --watch src --exec ts-node src/server.ts"
   },
+ "prisma": {
+  "seed": "ts-node prisma/seed.ts"
+},
   "name": "backend",
   "version": "1.0.0",
   "description": "resturant-management",
