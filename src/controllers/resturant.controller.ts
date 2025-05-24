@@ -129,6 +129,7 @@ export const getRestaurants = async (req: Request, res: Response) => {
       where: condition,
       skip: (pageNumber - 1) * size,
       take: size,
+      orderBy: {createdAt: "desc"}
     });
 
     res.status(200).json({ message: "Restaurants fetched successfully", restaurants });
@@ -146,7 +147,7 @@ export const deleteRestaurant = async (req: Request, res: Response) => {
       where: { id: parseInt(id) },
     });
 
-    res.status(200).json({ message: "Resturant added succesfully", restaurant: deletedRestaurant });
+    res.status(200).json({ message: "Resturant deleted succesfully", restaurant: deletedRestaurant });
   } catch (error) {
     console.error("Error deleting restaurant:", error);
     res.status(500).json({ message: "Failed to delete restaurant" });
