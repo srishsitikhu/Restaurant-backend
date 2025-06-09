@@ -1,5 +1,5 @@
 import { RequestHandler, Router } from "express";
-import { addContact, getContacts } from "../controllers/Contact.controller";
+import { addContact, getContacts } from "../controllers/contact.controller";
 
 const router = Router()
 
